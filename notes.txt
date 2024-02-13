@@ -14,3 +14,5 @@ Tạo migrations
 npx sequelize-cli db:migrate
 
 Tạo Seeder: npx sequelize-cli seed:generate --name demo-user
+
+Hash User's password với thư viện Bcryptjs: https://www.npmjs.com/package/bcryptjs (npm install --save bcryptjs@2.4.3)
