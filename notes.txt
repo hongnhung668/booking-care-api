@@ -16,3 +16,10 @@ npx sequelize-cli db:migrate
 Tạo Seeder: npx sequelize-cli seed:generate --name demo-user
 
 Hash User's password với thư viện Bcryptjs: https://www.npmjs.com/package/bcryptjs (npm install --save bcryptjs@2.4.3)
+
+Tải NVM (chạy nhiều version nodejs) mới nhất tại đây: https://github.com/coreybutler/nvm-windows/releases
+
+- Tài liệu hướng dẫn sử dụng NVM : https://github.com/coreybutler/nvm-windows#readme
+
+cài đặt version Node => nvm install 16.15.1
+Sử dụng version Node => nvm use 16.15.1
