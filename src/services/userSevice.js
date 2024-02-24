@@ -133,6 +133,44 @@ let createNewUser = (data) => {
     })
 }
 
+let updateUserData = (data) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(!data.id){
+                resolve({
+                    errCode: 2,
+                    message: 'missing required parameters'
+                });
+            }
+            let user = await db.User.findOne({
+                where: {id: data.id},
+                raw: false
+            });
+            if(user){
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.address = data.address;
+
+                await user.save();
+
+                resolve({
+                    errCode: 0,
+                    message: 'update the user success'
+                });
+
+            }else{
+                resolve({
+                    errCode: 1,
+                    message: `user'ss not found`
+                });
+
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 let deleteUser = (userId) => {
     return new Promise ( async (resolve, reject) => {
         let foundUser = await db.User.findOne({
@@ -160,5 +198,6 @@ module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
+    updateUserData: updateUserData,
     deleteUser: deleteUser,
 }
