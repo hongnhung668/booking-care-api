@@ -46,12 +46,19 @@ let handleCreateNewUser = async (req, res) => {
     let message = await userSevice.createNewUser(req.body);
     return res.status(200).json(message);
 }
-let handleEditUser = () => {
-
+let handleEditUser = async (req, res) => {
+    
 }
 
-let handleDeleteUser = () => {
-
+let handleDeleteUser = async (req, res) => {
+    if(!req.body.id){
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: "missing required parameters"
+        });
+    }
+    let message = await userSevice.deleteUser(req.body.id);
+    return res.status(200).json(message);
 }
 
 module.exports = {
