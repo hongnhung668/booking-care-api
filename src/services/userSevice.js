@@ -1,6 +1,19 @@
 import db from "../models";
 import bcrypt, { compareSync } from "bcryptjs";
 
+const salt = bcrypt.genSaltSync(10);
+
+let hasUserPassword = (password) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            let hashPassword = await bcrypt.hashSync(password, salt);
+            resolve(hashPassword);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 let handleUserLogin = (email, password) => {
     return new Promise( async (resolve, reject) => {
         try {
@@ -86,7 +99,42 @@ let getAllUsers = (userId) => {
     })
 }
 
+let createNewUser = (data) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            //check email exists ???
+            let check = await checkUserEmail(data.email);
+            if(check === true){
+                resolve({
+                    errCode: 1,
+                    messager: 'your email is already in used, plz try other email'
+                });
+            }else{
+                let hashPasswordFromBcrypt = await hasUserPassword(data.password);
+                await db.User.create({
+                    email: data.email,
+                    password: hashPasswordFromBcrypt,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phonenumber: data.phoneNumber,
+                    gender: data.gender === '1' ? true : false,
+                    roleId: data.roleId,
+
+                })
+                resolve({
+                    errCode: 0,
+                    messager: 'success'
+                });
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
+    createNewUser: createNewUser,
 }
