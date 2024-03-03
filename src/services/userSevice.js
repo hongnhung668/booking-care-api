@@ -107,7 +107,7 @@ let createNewUser = (data) => {
             if(check === true){
                 resolve({
                     errCode: 1,
-                    messager: 'your email is already in used, plz try other email'
+                    message: 'your email is already in used, plz try other email'
                 });
             }else{
                 let hashPasswordFromBcrypt = await hasUserPassword(data.password);
@@ -124,7 +124,7 @@ let createNewUser = (data) => {
                 })
                 resolve({
                     errCode: 0,
-                    messager: 'success'
+                    message: 'success'
                 });
             }
         } catch (error) {
@@ -179,7 +179,7 @@ let deleteUser = (userId) => {
         if(!foundUser){
             resolve({
                 errCode: 2,
-                errMessage: `the user isn't exists`
+                message: `the user isn't exists`
             })
         }
 
@@ -189,7 +189,7 @@ let deleteUser = (userId) => {
 
         resolve({
             errCode: 0,
-            errMessage: 'the user deleted'
+            message: 'the user deleted'
         })
     })
 }
